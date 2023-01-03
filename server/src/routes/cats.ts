@@ -1,18 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import axios from "axios";
+import onRequestValidation from "../utils/onRequestValidation";
 
-const catRoutes = async (fastify: FastifyInstance) => {
-  fastify.addHook("onRequest", async (request, reply) => {
-    try {
-      await request.jwtVerify();
-    } catch (err: unknown) {
-      return reply.code(403).send({
-        message: "Você não tem permissão para acessar este recurso",
-        error: err,
-      });
-    }
-  });
+const catRouter = async (fastify: FastifyInstance) => {
+  onRequestValidation(fastify);
 
   fastify.get("/", async (request, reply) => {
     const querySchema = z.object({
@@ -29,4 +21,4 @@ const catRoutes = async (fastify: FastifyInstance) => {
   });
 };
 
-export default catRoutes;
+export default catRouter;

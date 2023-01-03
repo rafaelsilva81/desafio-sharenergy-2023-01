@@ -8,7 +8,7 @@ const userSchema = z.object({
   password: z.string(),
 });
 
-const authRoutes = async (fastify: FastifyInstance) => {
+const authRouter = async (fastify: FastifyInstance) => {
   /* Registro de usuário */
   fastify.post("/register", async (request, reply) => {
     const { username, password } = userSchema.parse(request.body);
@@ -70,4 +70,4 @@ const authRoutes = async (fastify: FastifyInstance) => {
   });
 };
 
-export default authRoutes;
+export default authRouter;

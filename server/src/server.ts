@@ -4,8 +4,8 @@ import * as dotenv from "dotenv";
 import fastifyJwt from "@fastify/jwt";
 
 /* Routes */
-import authRoutes from "./routes/auth";
-import catRoutes from "./routes/cats";
+import authRouter from "./routes/auth";
+import catRouter from "./routes/cats";
 
 dotenv.config();
 const port = process.env.PORT || "3333";
@@ -27,9 +27,9 @@ const bootstrap = async () => {
     },
   });
 
-  await fastify.register(authRoutes, { prefix: "/auth" });
+  await fastify.register(authRouter, { prefix: "/auth" });
 
-  await fastify.register(catRoutes, { prefix: "/cat" });
+  await fastify.register(catRouter, { prefix: "/cat" });
 
   await fastify.listen({
     port: Number(port),
