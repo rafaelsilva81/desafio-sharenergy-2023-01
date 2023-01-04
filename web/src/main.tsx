@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./pages/App";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Cats from "./pages/Cats";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Login />,
   },
   {
     path: "/cats",
