@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import axios from "axios";
 import onRequestValidation from "../utils/onRequestValidation";
+import fs from "fs";
 
 const catRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
@@ -17,7 +18,11 @@ const catRouter = async (fastify: FastifyInstance) => {
       responseType: "arraybuffer",
     });
 
-    reply.code(200).type("image/png").send(data);
+    const image = Buffer.from(data, "binary").toString("base64");
+
+    return reply.status(200).send({
+      image: `data:image/png;base64,${image}`,
+    });
   });
 };
 
