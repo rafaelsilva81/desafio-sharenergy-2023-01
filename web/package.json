@@ -12,6 +12,7 @@
     "axios": "^1.2.2",
     "framer-motion": "^8.1.5",
     "jotai": "^1.12.1",
+    "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
