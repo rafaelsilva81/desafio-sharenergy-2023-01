@@ -29,7 +29,7 @@ const bootstrap = async () => {
 
   await fastify.register(authRouter, { prefix: "/auth" });
 
-  await fastify.register(catRouter, { prefix: "/cat" });
+  await fastify.register(catRouter, { prefix: "/cats" });
 
   await fastify.listen({
     port: Number(port),

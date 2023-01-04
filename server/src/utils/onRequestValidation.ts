@@ -5,7 +5,7 @@ const onRequestValidation = (fastify: FastifyInstance) => {
     try {
       await request.jwtVerify();
     } catch (err: unknown) {
-      return reply.code(403).send({
+      return reply.code(401).send({
         message: "Você não tem permissão para acessar este recurso",
         error: err,
       });

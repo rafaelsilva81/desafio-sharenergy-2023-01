@@ -82,7 +82,7 @@ const authRouter = async (fastify: FastifyInstance) => {
         valid: true,
       });
     } catch (err) {
-      return reply.status(403).send({
+      return reply.status(401).send({
         valid: false,
       });
     }
