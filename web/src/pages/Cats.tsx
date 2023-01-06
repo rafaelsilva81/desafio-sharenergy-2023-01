@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
-import LoadingElement from "../components/LoadingElement";
-import Sidemenu from "../components/Sidemenu";
+import LoadingElement from "../components/common/LoadingElement";
+import Sidemenu from "../components/common/Sidemenu";
 import { api } from "../lib/axios";
 import { AxiosError } from "axios";
 import { Cat } from "phosphor-react";
@@ -47,7 +47,7 @@ const Cats = () => {
       <main className="flex w-full flex-1 items-center justify-center gap-20 p-8">
         {/* Input */}
         <div className="flex w-1/2 flex-col gap-4">
-          <h1 className="flex cursor-pointer items-center gap-1 text-4xl font-bold">
+          <h1 className="font-bol flex cursor-pointer items-center gap-1 text-4xl">
             <Cat weight="fill" /> HTTP Cat
           </h1>
           <p className="text-lg">

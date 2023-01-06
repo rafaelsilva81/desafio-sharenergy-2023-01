@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import logo from "../assets/logo_color.png";
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
+import LoginForm from "../components/forms/LoginForm";
+import RegisterForm from "../components/forms/RegisterForm";
 import { loginActionAtom } from "../lib/atoms";
 
 const Login = () => {
