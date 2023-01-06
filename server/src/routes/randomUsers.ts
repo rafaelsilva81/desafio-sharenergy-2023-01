@@ -12,7 +12,7 @@ const randomUserRouter = async (fastify: FastifyInstance) => {
 
   fastify.get("/", async (request, reply) => {
     const querySchema = z.object({
-      page: z.number().optional(),
+      page: z.string().transform((value) => Number(value)),
     });
 
     const { page } = querySchema.parse(request.query) || 1;
