@@ -10,7 +10,7 @@ const baseResults = 10;
 const randomUserRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
-  fastify.get("/all", async (request, reply) => {
+  fastify.get("/", async (request, reply) => {
     const querySchema = z.object({
       page: z.number().optional(),
     });

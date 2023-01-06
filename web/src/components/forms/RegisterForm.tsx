@@ -8,6 +8,7 @@ import { TypeOf } from "zod/lib";
 import { api } from "../../lib/axios";
 import LoadingElement from "../LoadingElement";
 import { Lock, User } from "phosphor-react";
+import { AxiosResponse } from "axios";
 
 /* TODO: Better error messages */
 

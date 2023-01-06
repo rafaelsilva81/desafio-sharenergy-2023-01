@@ -1,6 +1,7 @@
-import React from "react";
 import { Cat, Dog, UserList, Users, UserCircle, SignOut } from "phosphor-react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import useSWR from "swr";
+import { api } from "../lib/axios";
 
 interface INavItem {
   name: string;
@@ -36,17 +37,34 @@ const activeStyle =
 const inactiveStyle =
   "flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out hover:bg-primary hover:text-gray-800";
 
-/* Recebe um numero que indica qual elemento do array acima está ativo */
 const Sidemenu = () => {
+  /*   const { data, error, isLoading } = useSWR("/auth/me", async (url) => {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  });
+
+  if (error) {
+    console.log(error);
+  }
+
+  console.log(data); */
+
   return (
     <>
-      <aside className="flex min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-2 pt-10 shadow-lg">
+      <aside className="flex min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg">
         {/* Seção do perfil do usuario */}
         <div className="mx-auto flex items-center gap-1">
           <UserCircle size={48} color="white" weight="fill" />
           <div className="flex flex-col">
-            <span className="overflow-hidden text-ellipsis font-bold">
-              Olá, NOME
+            <span className="overflow-hidden text-ellipsis">
+              Olá,{" "}
+              <span className="font-bold">
+                {localStorage.getItem("username")}
+              </span>
             </span>
             <a
               href="#"

@@ -5,14 +5,10 @@ import { api } from "../lib/axios";
 import { AxiosError } from "axios";
 import { Cat } from "phosphor-react";
 
-interface CatResponse {
-  image: string;
-}
-
 const Cats = () => {
   const [httpStatus, setHttpStatus] = useState(404);
 
-  const { isLoading, data, error, mutate } = useSWR<CatResponse, AxiosError>(
+  const { isLoading, data, error, mutate } = useSWR<Cat, AxiosError>(
     "/cats",
     async (url) => {
       const response = await api.get(url, {

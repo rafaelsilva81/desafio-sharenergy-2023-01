@@ -1,0 +1,3 @@
+type Cat = {
+  image: string;
+};

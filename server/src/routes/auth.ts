@@ -68,25 +68,6 @@ const authRouter = async (fastify: FastifyInstance) => {
       message: "Login realizado com sucesso",
     });
   });
-
-  fastify.post("/validate", async (request, reply) => {
-    const bodySchema = z.object({
-      token: z.string(),
-    });
-
-    const { token } = bodySchema.parse(request.body);
-
-    try {
-      const decoded = fastify.jwt.verify(token);
-      return reply.status(200).send({
-        valid: true,
-      });
-    } catch (err) {
-      return reply.status(401).send({
-        valid: false,
-      });
-    }
-  });
 };
 
 export default authRouter;
