@@ -9,14 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "axios": "^1.2.2",
     "framer-motion": "^8.1.5",
     "jotai": "^1.12.1",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.41.5",
     "react-router-dom": "^6.6.1",
-    "swr": "^2.0.0"
+    "swr": "^2.0.0",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
