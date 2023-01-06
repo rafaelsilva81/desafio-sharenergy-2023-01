@@ -1,15 +1,21 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 /* Pages */
-import Cats from "./pages/Cats";
+
+import { Route, Routes, RouteProps } from "react-router";
+import Layout from "./components/Layout";
+import { BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
-import ErrorPage from "./components/errors/ErrorPage";
-import Dogs from "./pages/Dogs";
-import Users from "./pages/Users";
-import Clients from "./pages/Clients";
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/*" element={<Layout />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

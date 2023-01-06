@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
-import LoadingElement from "../components/common/LoadingElement";
-import Sidemenu from "../components/common/Sidemenu";
+import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 import { AxiosError } from "axios";
 import { Cat } from "phosphor-react";
@@ -40,60 +39,56 @@ const Cats = () => {
   }
 
   return (
-    <div className="flex">
+    <main className="flex w-full flex-1 items-center justify-center gap-20 p-8">
       {isLoading && <LoadingElement />}
-      <Sidemenu active={1} />
+      {/* Input */}
+      <div className="flex w-1/2 flex-col gap-4">
+        <h1 className="font-bol flex cursor-pointer items-center gap-1 text-4xl">
+          <Cat weight="fill" /> HTTP Cat
+        </h1>
+        <p className="text-lg">
+          Digite um
+          <a href="" rel="noreferrer" target="_blank">
+            {" "}
+            Código de Status HTTP{" "}
+          </a>
+          e receba uma imagem de um gatinho equivalente!
+        </p>
 
-      <main className="flex w-full flex-1 items-center justify-center gap-20 p-8">
-        {/* Input */}
-        <div className="flex w-1/2 flex-col gap-4">
-          <h1 className="font-bol flex cursor-pointer items-center gap-1 text-4xl">
-            <Cat weight="fill" /> HTTP Cat
-          </h1>
-          <p className="text-lg">
-            Digite um
-            <a href="" rel="noreferrer" target="_blank">
-              {" "}
-              Código de Status HTTP{" "}
-            </a>
-            e receba uma imagem de um gatinho equivalente!
-          </p>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="httpStatus" className="text-gray-400">
-              Código HTTP :
-            </label>
-            <input
-              id="httpStatus"
-              type="number"
-              min="1"
-              step="1"
-              placeholder="404"
-              className="h-12 rounded-md p-2"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setHttpStatus(Number(e.target.value))
-              }
-            />
-            {!isLoading && error?.response?.status === 404 && (
-              <p className="text-red-500">{"Gatinho não encontado! :("} </p>
-            )}
-          </div>
-        </div>
-
-        {/* Image */}
-        <div className="flex w-1/2 flex-col gap-4">
-          {data && (
-            <>
-              <img
-                src={data.image}
-                alt="HTTP Cat"
-                className="bobject-cover rounded-md border-4 border-primary"
-              />
-            </>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="httpStatus" className="text-gray-400">
+            Código HTTP :
+          </label>
+          <input
+            id="httpStatus"
+            type="number"
+            min="1"
+            step="1"
+            placeholder="404"
+            className="h-12 rounded-md p-2"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setHttpStatus(Number(e.target.value))
+            }
+          />
+          {!isLoading && error?.response?.status === 404 && (
+            <p className="text-red-500">{"Gatinho não encontado! :("} </p>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Image */}
+      <div className="flex w-1/2 flex-col gap-4">
+        {data && (
+          <>
+            <img
+              src={data.image}
+              alt="HTTP Cat"
+              className="bobject-cover rounded-md border-4 border-primary"
+            />
+          </>
+        )}
+      </div>
+    </main>
   );
 };
 

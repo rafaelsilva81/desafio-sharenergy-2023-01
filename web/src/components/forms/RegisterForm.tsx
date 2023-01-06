@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TypeOf } from "zod/lib";
 import { api } from "../../lib/axios";
-import LoadingElement from "../common/LoadingElement";
+import LoadingElement from "../LoadingElement";
 import { Lock, User } from "phosphor-react";
 
 /* TODO: Better error messages */

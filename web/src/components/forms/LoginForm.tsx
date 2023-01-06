@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TypeOf } from "zod/lib";
 import { api } from "../../lib/axios";
-import LoadingElement from "../common/LoadingElement";
+import LoadingElement from "../LoadingElement";
 import { User, Lock } from "phosphor-react";
 
 /* TODO: Better error messages */
@@ -49,10 +49,10 @@ const LoginForm = () => {
       })
       .then((res) => {
         if (data.rememberMe) {
-          localStorage.setItem("username", data.username);
           localStorage.setItem("password", data.password);
           localStorage.setItem("rememberMe", "true");
         }
+        localStorage.setItem("username", data.username);
         localStorage.setItem("token", res.data.token);
         window.location.href = "/users";
       })

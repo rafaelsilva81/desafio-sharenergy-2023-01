@@ -1,5 +1,6 @@
 import React from "react";
 import { Cat, Dog, UserList, Users, UserCircle, SignOut } from "phosphor-react";
+import { Link, NavLink } from "react-router-dom";
 
 interface INavItem {
   name: string;
@@ -30,8 +31,13 @@ const navigation: INavItem[] = [
   },
 ];
 
+const activeStyle =
+  "flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out bg-primary text-gray-800";
+const inactiveStyle =
+  "flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out hover:bg-primary hover:text-gray-800";
+
 /* Recebe um numero que indica qual elemento do array acima está ativo */
-const Sidemenu = ({ active }: { active: number }) => {
+const Sidemenu = () => {
   return (
     <>
       <aside className="flex min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-2 pt-10 shadow-lg">
@@ -55,27 +61,18 @@ const Sidemenu = ({ active }: { active: number }) => {
 
         {/* Seção de navegação */}
         <nav className="flex flex-col gap-2">
-          {navigation.map((item, index) =>
-            index === active ? (
-              <a
-                key={index + "-active"}
-                href={item.href}
-                className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-gray-800"
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </a>
-            ) : (
-              <a
-                key={index}
-                href={item.href}
-                className="flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out hover:bg-primary hover:text-gray-800"
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </a>
-            )
-          )}
+          {navigation.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.href}
+              className={({ isActive }) => {
+                return isActive ? activeStyle : inactiveStyle;
+              }}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </NavLink>
+          ))}
         </nav>
       </aside>
     </>
