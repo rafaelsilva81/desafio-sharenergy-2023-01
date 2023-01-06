@@ -21,7 +21,7 @@ model Client {
   id      String @id @default(cuid()) @map("_id")
   name    String
   email   String @unique
-  phone   String @unique
+  phone   String
   address String
   cpf     String @unique
   user    User   @relation(fields: [userId], references: [id])
