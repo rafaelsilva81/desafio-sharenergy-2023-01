@@ -8,11 +8,11 @@ const catRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
   fastify.get("/", async (request, reply) => {
-    const querySchema = z.object({
+    const catParams = z.object({
       code: z.string(),
     });
 
-    const { code } = querySchema.parse(request.query);
+    const { code } = catParams.parse(request.query);
 
     await axios
       .get(`https://http.cat/${code}`, {

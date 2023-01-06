@@ -3,7 +3,7 @@ import { z } from "zod";
 import db from "../lib/prisma";
 import bcrypt from "bcrypt";
 
-const userSchema = z.object({
+const userBody = z.object({
   username: z.string(),
   password: z.string(),
 });
@@ -11,7 +11,7 @@ const userSchema = z.object({
 const authRouter = async (fastify: FastifyInstance) => {
   /* Registro de usuário */
   fastify.post("/register", async (request, reply) => {
-    const { username, password } = userSchema.parse(request.body);
+    const { username, password } = userBody.parse(request.body);
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.user
       .create({
@@ -35,7 +35,7 @@ const authRouter = async (fastify: FastifyInstance) => {
 
   /* Login de usuário */
   fastify.post("/login", async (request, reply) => {
-    const { username, password } = userSchema.parse(request.body);
+    const { username, password } = userBody.parse(request.body);
 
     const user = await db.user.findUnique({
       where: {
