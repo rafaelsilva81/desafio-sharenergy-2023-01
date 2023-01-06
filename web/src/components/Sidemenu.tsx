@@ -55,7 +55,8 @@ const Sidemenu = () => {
 
   return (
     <>
-      <aside className="flex min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg">
+      {/* Menu para telas grandes */}
+      <aside className="hidden min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg lg:flex">
         {/* Seção do perfil do usuario */}
         <div className="mx-auto flex items-center gap-1">
           <UserCircle size={48} color="white" weight="fill" />

@@ -35,16 +35,21 @@ const Cats = () => {
   }
 
   return (
-    <main className="flex w-full flex-1 items-center justify-center gap-20 p-8">
+    <main className="flex w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:flex-row">
       {isLoading && <LoadingElement />}
       {/* Input */}
-      <div className="flex w-1/2 flex-col gap-4">
+      <div className="flex flex-col gap-4 md:w-1/2">
         <h1 className="font-bol flex cursor-pointer items-center gap-1 text-4xl">
           <Cat weight="fill" /> HTTP Cat
         </h1>
         <p className="text-lg">
           Digite um
-          <a href="" rel="noreferrer" target="_blank">
+          <a
+            href="https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_de_estado_HTTP"
+            rel="noreferrer"
+            target="_blank"
+            className="text-primary"
+          >
             {" "}
             Código de Status HTTP{" "}
           </a>
@@ -73,7 +78,7 @@ const Cats = () => {
       </div>
 
       {/* Image */}
-      <div className="flex w-1/2 flex-col gap-4">
+      <div className="flex flex-col gap-4 md:w-1/2">
         {data && (
           <>
             <img
