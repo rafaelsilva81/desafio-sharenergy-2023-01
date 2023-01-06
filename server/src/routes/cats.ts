@@ -14,15 +14,22 @@ const catRouter = async (fastify: FastifyInstance) => {
 
     const { code } = querySchema.parse(request.query);
 
-    const { data } = await axios.get(`https://http.cat/${code}`, {
-      responseType: "arraybuffer",
-    });
+    await axios
+      .get(`https://http.cat/${code}`, {
+        responseType: "arraybuffer",
+      })
+      .then((response) => {
+        const image = Buffer.from(response.data, "binary").toString("base64");
 
-    const image = Buffer.from(data, "binary").toString("base64");
-
-    return reply.status(200).send({
-      image: `data:image/png;base64,${image}`,
-    });
+        return reply.status(200).send({
+          image: `data:image/png;base64,${image}`,
+        });
+      })
+      .catch((error) => {
+        return reply.status(404).send({
+          image: "https://http.cat/404.jpg",
+        });
+      });
   });
 };
 
