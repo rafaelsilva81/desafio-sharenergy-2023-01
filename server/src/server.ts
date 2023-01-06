@@ -7,6 +7,7 @@ import fastifyJwt from "@fastify/jwt";
 import authRouter from "./routes/auth";
 import catRouter from "./routes/cats";
 import randomUserRouter from "./routes/randomUsers";
+import dogRouter from "./routes/dogs";
 
 dotenv.config();
 const port = process.env.PORT || "3333";
@@ -28,11 +29,13 @@ const bootstrap = async () => {
     },
   });
 
+  await fastify.register(randomUserRouter, { prefix: "/random-users" });
+
   await fastify.register(authRouter, { prefix: "/auth" });
 
   await fastify.register(catRouter, { prefix: "/cats" });
 
-  await fastify.register(randomUserRouter, { prefix: "/random-users" });
+  await fastify.register(dogRouter, { prefix: "/dogs" });
 
   await fastify.listen({
     port: Number(port),

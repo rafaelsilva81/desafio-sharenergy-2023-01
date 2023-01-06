@@ -5,7 +5,7 @@ import onRequestValidation from "../utils/onRequestValidation";
 
 const baseUrl =
   "https://randomuser.me/api/?seed=rafaelsilva81&nat=br&inc=picture,name,email,login,dob,login";
-const baseResults = 10;
+const baseResults = 18;
 
 const randomUserRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
