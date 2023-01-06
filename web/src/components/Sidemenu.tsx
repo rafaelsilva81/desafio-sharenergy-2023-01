@@ -11,7 +11,7 @@ const navigation: INavItem[] = [
   {
     name: "Random Users",
     icon: <UserList size={24} weight="fill" />,
-    href: "/",
+    href: "/users",
   },
   {
     name: "HTTP Cat",
@@ -39,7 +39,7 @@ const Sidemenu = ({ active }: { active: number }) => {
         <div className="mx-auto flex items-center gap-1">
           <UserCircle size={48} color="white" weight="fill" />
           <div className="flex flex-col">
-            <span className="overflow-hidden text-ellipsis font-bold text-white">
+            <span className="overflow-hidden text-ellipsis font-bold">
               Olá, NOME
             </span>
             <a
@@ -58,6 +58,7 @@ const Sidemenu = ({ active }: { active: number }) => {
           {navigation.map((item, index) =>
             index === active ? (
               <a
+                key={index + "-active"}
                 href={item.href}
                 className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-gray-800"
               >
@@ -66,8 +67,9 @@ const Sidemenu = ({ active }: { active: number }) => {
               </a>
             ) : (
               <a
+                key={index}
                 href={item.href}
-                className="flex items-center gap-2 rounded-lg px-4 py-2 text-white transition ease-in-out hover:bg-primary hover:text-gray-800"
+                className="flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out hover:bg-primary hover:text-gray-800"
               >
                 {item.icon}
                 <span>{item.name}</span>
@@ -81,13 +83,3 @@ const Sidemenu = ({ active }: { active: number }) => {
 };
 
 export default Sidemenu;
-
-{
-  /* <a
-href={item.href}
-className="flex items-center gap-2 rounded-lg px-4 py-2 text-white transition ease-in-out hover:bg-primary hover:text-secondary"
->
-  {item.icon}
-<span>{item.name}</span>
-</a> */
-}
