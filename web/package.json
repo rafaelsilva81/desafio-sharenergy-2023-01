@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.7",
     "@hookform/resolvers": "^2.9.10",
     "axios": "^1.2.2",
     "framer-motion": "^8.1.5",

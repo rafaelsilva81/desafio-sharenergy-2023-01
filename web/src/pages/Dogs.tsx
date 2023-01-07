@@ -61,6 +61,7 @@ const Dogs = () => {
                 className="rounded-md border-4 border-primary object-cover"
                 autoPlay
                 loop
+                muted
               />
             ) : (
               <img

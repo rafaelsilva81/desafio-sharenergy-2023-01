@@ -101,36 +101,22 @@ const Users = () => {
       </section>
 
       {/* Pagination */}
-      <section className="flex items-center justify-between gap-4 rounded-lg bg-gray-800 p-4">
-        <div className="flex items-center gap-2">
-          <label htmlFor="page">Ir para a página :</label>
-          <input
-            type="number"
-            className="decoration-none w-14 rounded-md p-1 text-center"
-            onChange={(e) => {
-              setPage(Number(e.target.value));
-            }}
-            value={page}
-          />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage((prevPage) => prevPage - 1)}
-            className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-          >
-            <CaretLeft weight="fill" />
-          </button>
-          {data?.info.page}
-          <button
-            onClick={() => setPage((prevPage) => prevPage + 1)}
-            className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-          >
-            <CaretRight weight="fill" />
-          </button>
-        </div>
-      </section>
+      <div className="flex items-center gap-4">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((prevPage) => prevPage - 1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretLeft weight="fill" />
+        </button>
+        {data?.info.page}
+        <button
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretRight weight="fill" />
+        </button>
+      </div>
     </main>
   );
 };

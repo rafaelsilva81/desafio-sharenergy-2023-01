@@ -1,10 +1,28 @@
 import { AxiosError } from "axios";
-import { MagnifyingGlass, Pen, Plus, Trash, UsersThree } from "phosphor-react";
+import {
+  CaretLeft,
+  CaretRight,
+  MagnifyingGlass,
+  Pen,
+  Plus,
+  Trash,
+  UsersThree,
+} from "phosphor-react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
+import ClientModal from "../components/modals/ClientModal";
 import { api } from "../lib/axios";
 
 const Clients = () => {
+  const [page, setPage] = useState(1);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [client, setClient] = useState<Client>();
+  const [action, setAction] = useState<"create" | "edit" | "view" | "delete">(
+    "create"
+  );
+
   const { data, error, isLoading, mutate } = useSWR<Client[], AxiosError>(
     "/clients/",
     async (url) => {
@@ -14,12 +32,16 @@ const Clients = () => {
         },
         params: {
           userId: localStorage.getItem("username"),
+          page: page,
         },
       });
       return response.data;
     }
   );
 
+  useEffect(() => {
+    mutate();
+  }, [page]);
   if (error) {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
@@ -47,6 +69,11 @@ const Clients = () => {
           <button
             className="flex items-center gap-2 rounded-md bg-neutral-300 p-2 text-gray-800 transition
            hover:bg-primary"
+            onClick={() => {
+              setClient(undefined);
+              setAction("create");
+              setOpenModal(true);
+            }}
           >
             <Plus size={18} />
             Adicionar Cliente
@@ -69,7 +96,12 @@ const Clients = () => {
               <div className="mt-1 flex gap-2">
                 <button
                   className="transitionhover:bg-primary flex items-center gap-2 rounded-md bg-neutral-300 p-2 
-                  text-gray-800"
+                  text-gray-800 transition hover:bg-primary"
+                  onClick={() => {
+                    setClient(client);
+                    setAction("view");
+                    setOpenModal(true);
+                  }}
                 >
                   <MagnifyingGlass weight="fill" />
                 </button>
@@ -77,6 +109,11 @@ const Clients = () => {
                 <button
                   className="flex items-center gap-2 rounded-md bg-neutral-300 p-2 text-gray-800 
                   transition hover:bg-primary"
+                  onClick={() => {
+                    setClient(client);
+                    setAction("edit");
+                    setOpenModal(true);
+                  }}
                 >
                   <Pen weight="fill" />
                 </button>
@@ -84,6 +121,11 @@ const Clients = () => {
                 <button
                   className="flex items-center gap-2 rounded-md bg-neutral-300 p-2 text-gray-800 
                   transition hover:bg-primary"
+                  onClick={() => {
+                    setClient(client);
+                    setAction("delete");
+                    setOpenModal(true);
+                  }}
                 >
                   <Trash weight="fill" />
                 </button>
@@ -92,6 +134,32 @@ const Clients = () => {
           </div>
         ))}
       </section>
+
+      {/* Pagination */}
+      <div className="flex items-center gap-4">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((prevPage) => prevPage - 1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretLeft weight="fill" />
+        </button>
+        {page}
+        <button
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretRight weight="fill" />
+        </button>
+      </div>
+
+      {/* Modal */}
+      <ClientModal
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        client={client}
+        action={action}
+      />
     </main>
   );
 };
