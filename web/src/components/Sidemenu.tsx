@@ -1,7 +1,13 @@
-import { Cat, Dog, UserList, Users, UserCircle, SignOut } from "phosphor-react";
+import {
+  Cat,
+  Dog,
+  SignOut,
+  UserCircle,
+  UserList,
+  Users,
+} from "phosphor-react";
+import { FormEvent } from "react";
 import { NavLink } from "react-router-dom";
-import useSWR from "swr";
-import { api } from "../lib/axios";
 
 interface INavItem {
   name: string;
@@ -38,27 +44,23 @@ const inactiveStyle =
   "flex items-center gap-2 rounded-lg px-4 py-2 transition ease-in-out hover:bg-primary hover:text-gray-800";
 
 const Sidemenu = () => {
-  /*   const { data, error, isLoading } = useSWR("/auth/me", async (url) => {
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return response.data;
-  });
-
-  if (error) {
-    console.log(error);
-  }
-
-  console.log(data); */
+  const logout = (e: FormEvent) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   return (
     <>
-      <aside className="flex min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg">
+      {/* Menu para telas grandes */}
+      <aside className="hidden min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg lg:flex">
         {/* Seção do perfil do usuario */}
         <div className="mx-auto flex items-center gap-1">
-          <UserCircle size={48} color="white" weight="fill" />
+          <UserCircle
+            size={48}
+            color="white"
+            weight="fill"
+          />
           <div className="flex flex-col">
             <span className="overflow-hidden text-ellipsis">
               Olá,{" "}
@@ -66,12 +68,12 @@ const Sidemenu = () => {
                 {localStorage.getItem("username")}
               </span>
             </span>
-            <a
-              href="#"
+            <button
+              onClick={logout}
               className="flex items-center gap-1 text-sm text-gray-400 hover:text-primary"
             >
               <SignOut /> Sair
-            </a>
+            </button>
           </div>
         </div>
 
@@ -84,7 +86,9 @@ const Sidemenu = () => {
               key={index}
               to={item.href}
               className={({ isActive }) => {
-                return isActive ? activeStyle : inactiveStyle;
+                return isActive
+                  ? activeStyle
+                  : inactiveStyle;
               }}
             >
               {item.icon}

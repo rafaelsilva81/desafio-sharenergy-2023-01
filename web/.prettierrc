@@ -1,0 +1,8 @@
+{
+  "printWidth": 60,
+  "plugins": [
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "pluginSearchDirs": false
+}

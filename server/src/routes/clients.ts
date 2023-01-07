@@ -14,17 +14,33 @@ const clientCreateBody = z.object({
 
 // Transforma todos os campos em opcionais
 const clientUpdateBody = clientCreateBody.partial();
-const clientIdParams = z.object({
-  id: z.string(),
-});
 
 const clientRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
   /* GET Cliente */
   fastify.get("/", async (request, reply) => {
-    const clients = await db.client.findMany();
-    reply.send(clients);
+    const paramsSchema = z.object({
+      userId: z.string(),
+      page: z
+        .string()
+        .transform((value) => Number(value))
+        .optional(),
+    });
+
+    const params = paramsSchema.parse(request.query);
+
+    const page = params.page || 1;
+
+    const clients = await db.client.findMany({
+      where: {
+        userId: params.userId,
+      },
+      take: 12,
+      skip: page * 12 - 12, // Pagina 1 = 0, Pagina 2 = 12, Pagina 3 = 24
+    });
+
+    reply.status(200).send(clients);
   });
 
   /* POST Cliente */
@@ -74,7 +90,12 @@ const clientRouter = async (fastify: FastifyInstance) => {
   /* PUT Cliente */
   fastify.put("/:id", async (request, reply) => {
     const body = clientUpdateBody.parse(request.body);
-    const params = clientIdParams.parse(request.params);
+
+    const paramsSchema = z.object({
+      id: z.string(),
+    });
+
+    const params = paramsSchema.parse(request.params);
 
     const clientExists = await db.client.findUnique({
       where: {
@@ -111,7 +132,11 @@ const clientRouter = async (fastify: FastifyInstance) => {
 
   /* DELETE Cliente */
   fastify.delete("/:id", async (request, reply) => {
-    const params = clientIdParams.parse(request.params);
+    const paramsSchema = z.object({
+      id: z.string(),
+    });
+
+    const params = paramsSchema.parse(request.params);
 
     const clientExists = await db.client.findUnique({
       where: {
