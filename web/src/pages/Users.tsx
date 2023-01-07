@@ -7,8 +7,10 @@ import {
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
+import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
+/* TODO: Filter */
 /* TODO: Filter */
 const Users = () => {
   const [page, setPage] = useState(1);
@@ -51,8 +53,12 @@ const Users = () => {
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
       {isLoading && <LoadingElement />}
+    <main className="flex flex-1 flex-col gap-4 p-8">
+      {isLoading && <LoadingElement />}
 
       {/* Header */}
+      <section className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-4 md:justify-between">
+        <div className="hidden items-center gap-1 md:flex">
       <section className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-4 md:justify-between">
         <div className="hidden items-center gap-1 md:flex">
           <User size={24} />
@@ -61,6 +67,7 @@ const Users = () => {
             Usuários Aleatórios{" "}
           </h1>
         </div>
+        <div className="flex flex-col gap-2 md:flex-row">
         <div className="flex flex-col gap-2 md:flex-row">
           <input
             type="text"
@@ -81,6 +88,7 @@ const Users = () => {
 
       {/* User list */}
       <section className="grid grid-cols-1 gap-2 md:grid-cols-3">
+      <section className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {data?.results.map((user) => (
           <div
             key={user.login.uuid}
@@ -93,9 +101,17 @@ const Users = () => {
               width={64}
             />
             <div className="flex flex-col gap-1 break-all">
+            <div className="flex flex-col gap-1 break-all">
               <h1 className="font-bold">
                 {user.name.first} {user.name.last}
+                {user.name.first} {user.name.last}
               </h1>
+              <span className="text-sm font-bold text-primary">
+                {user.login.username}
+              </span>
+              <span className="text-sm text-gray-400">
+                {user.dob.age} Anos{" "}
+              </span>
               <span className="text-sm font-bold text-primary">
                 {user.login.username}
               </span>
@@ -112,6 +128,19 @@ const Users = () => {
       </section>
 
       {/* Pagination */}
+      <section className="flex items-center justify-between gap-4 rounded-lg bg-gray-800 p-4">
+        <div className="flex items-center gap-2">
+          <label htmlFor="page">Ir para a página :</label>
+          <input
+            type="number"
+            className="decoration-none w-14 rounded-md p-1 text-center"
+            onChange={(e) => {
+              setPage(Number(e.target.value));
+            }}
+            value={page}
+          />
+        </div>
+
       <section className="flex items-center justify-between gap-4 rounded-lg bg-gray-800 p-4">
         <div className="flex items-center gap-2">
           <label htmlFor="page">Ir para a página :</label>
