@@ -8,7 +8,7 @@ const Layout = ({}: /*   children,
   active: number; */
 }) => {
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <Sidemenu />
 
       <Navigation />
