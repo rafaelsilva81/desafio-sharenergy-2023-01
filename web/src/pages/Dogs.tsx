@@ -5,20 +5,17 @@ import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
 const Dogs = () => {
-  const { data, error, isLoading, mutate } =
-    useSWRImmutable<Dog, AxiosError>(
-      "/dogs",
-      async (url) => {
-        const response = await api.get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "token"
-            )}`,
-          },
-        });
-        return response.data;
-      }
-    );
+  const { data, error, isLoading, mutate } = useSWRImmutable<Dog, AxiosError>(
+    "/dogs",
+    async (url) => {
+      const response = await api.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    }
+  );
 
   if (error) {
     if (error.response?.status === 401) {
@@ -27,8 +24,7 @@ const Dogs = () => {
     } else {
       return (
         <h1 className="p-2">
-          Erro ao carregar o cachorro. Por favor atualize a
-          página
+          Erro ao carregar o cachorro. Por favor atualize a página
         </h1>
       );
     }
@@ -44,8 +40,8 @@ const Dogs = () => {
           <Dog weight="fill" /> Random Dog
         </h1>
         <p className="text-lg">
-          Receba uma imagem ou um video de um cachorrinho
-          aleatório. Clique no item para gerar um novo!
+          Receba uma imagem ou um video de um cachorrinho aleatório. Clique no
+          item para gerar um novo!
         </p>
       </div>
 

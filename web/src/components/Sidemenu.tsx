@@ -1,11 +1,4 @@
-import {
-  Cat,
-  Dog,
-  SignOut,
-  UserCircle,
-  UserList,
-  Users,
-} from "phosphor-react";
+import { Cat, Dog, SignOut, UserCircle, UserList, Users } from "phosphor-react";
 import { FormEvent } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -56,11 +49,7 @@ const Sidemenu = () => {
       <aside className="hidden min-h-screen w-fit flex-col items-center gap-3 bg-gray-800 p-3 pt-10 shadow-lg lg:flex">
         {/* Seção do perfil do usuario */}
         <div className="mx-auto flex items-center gap-1">
-          <UserCircle
-            size={48}
-            color="white"
-            weight="fill"
-          />
+          <UserCircle size={48} color="white" weight="fill" />
           <div className="flex flex-col">
             <span className="overflow-hidden text-ellipsis">
               Olá,{" "}
@@ -86,9 +75,7 @@ const Sidemenu = () => {
               key={index}
               to={item.href}
               className={({ isActive }) => {
-                return isActive
-                  ? activeStyle
-                  : inactiveStyle;
+                return isActive ? activeStyle : inactiveStyle;
               }}
             >
               {item.icon}

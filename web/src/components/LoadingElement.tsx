@@ -1,5 +1,3 @@
-import React from "react";
-
 function LoadingElement() {
   return (
     <div className="absolute inset-0 bg-white opacity-50" style={{ zIndex: 1 }}>

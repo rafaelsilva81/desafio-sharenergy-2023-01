@@ -1,32 +1,24 @@
 import { AxiosError } from "axios";
-import {
-  MagnifyingGlass,
-  Pen,
-  Plus,
-  Trash,
-  UsersThree,
-} from "phosphor-react";
+import { MagnifyingGlass, Pen, Plus, Trash, UsersThree } from "phosphor-react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
 const Clients = () => {
-  const { data, error, isLoading, mutate } = useSWR<
-    Client[],
-    AxiosError
-  >("/clients/", async (url) => {
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "token"
-        )}`,
-      },
-      params: {
-        userId: localStorage.getItem("username"),
-      },
-    });
-    return response.data;
-  });
+  const { data, error, isLoading, mutate } = useSWR<Client[], AxiosError>(
+    "/clients/",
+    async (url) => {
+      const response = await api.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: {
+          userId: localStorage.getItem("username"),
+        },
+      });
+      return response.data;
+    }
+  );
 
   if (error) {
     if (error.response?.status === 401) {
@@ -35,8 +27,7 @@ const Clients = () => {
     } else {
       return (
         <h1 className="p-2">
-          Erro ao carregar clientes. Por favor atualize a
-          página
+          Erro ao carregar clientes. Por favor atualize a página
         </h1>
       );
     }

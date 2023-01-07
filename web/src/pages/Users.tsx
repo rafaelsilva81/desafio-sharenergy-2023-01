@@ -1,9 +1,5 @@
 import { AxiosError } from "axios";
-import {
-  CaretLeft,
-  CaretRight,
-  User,
-} from "phosphor-react";
+import { CaretLeft, CaretRight, User } from "phosphor-react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
@@ -18,22 +14,20 @@ const Users = () => {
     mutate();
   }, [page]);
 
-  const { data, error, isLoading, mutate } = useSWR<
-    Users,
-    AxiosError
-  >("/random-users/", async (url) => {
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "token"
-        )}`,
-      },
-      params: {
-        page: page,
-      },
-    });
-    return response.data;
-  });
+  const { data, error, isLoading, mutate } = useSWR<Users, AxiosError>(
+    "/random-users/",
+    async (url) => {
+      const response = await api.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: {
+          page: page,
+        },
+      });
+      return response.data;
+    }
+  );
 
   if (error) {
     if (error.response?.status === 401) {
@@ -42,8 +36,7 @@ const Users = () => {
     } else {
       return (
         <h1 className="p-2">
-          Erro ao carregar usuários. Por favor atualize a
-          página
+          Erro ao carregar usuários. Por favor atualize a página
         </h1>
       );
     }
@@ -57,10 +50,7 @@ const Users = () => {
       <section className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-4 md:justify-between">
         <div className="hidden items-center gap-1 md:flex">
           <User size={24} />
-          <h1 className="font-bold">
-            {" "}
-            Usuários Aleatórios{" "}
-          </h1>
+          <h1 className="font-bold"> Usuários Aleatórios </h1>
         </div>
         <div className="flex flex-col gap-2 md:flex-row">
           <input
@@ -104,9 +94,7 @@ const Users = () => {
                 {user.dob.age} Anos{" "}
               </span>
 
-              <h3 className="text-sm text-gray-400">
-                {user.email}
-              </h3>
+              <h3 className="text-sm text-gray-400">{user.email}</h3>
             </div>
           </div>
         ))}
@@ -129,18 +117,14 @@ const Users = () => {
         <div className="flex items-center gap-4">
           <button
             disabled={page === 1}
-            onClick={() =>
-              setPage((prevPage) => prevPage - 1)
-            }
+            onClick={() => setPage((prevPage) => prevPage - 1)}
             className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
           >
             <CaretLeft weight="fill" />
           </button>
           {data?.info.page}
           <button
-            onClick={() =>
-              setPage((prevPage) => prevPage + 1)
-            }
+            onClick={() => setPage((prevPage) => prevPage + 1)}
             className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
           >
             <CaretRight weight="fill" />

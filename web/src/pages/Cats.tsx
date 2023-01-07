@@ -8,22 +8,20 @@ import { api } from "../lib/axios";
 const Cats = () => {
   const [httpStatus, setHttpStatus] = useState(404);
 
-  const { isLoading, data, error, mutate } = useSWR<
-    Cat,
-    AxiosError
-  >("/cats", async (url) => {
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "token"
-        )}`,
-      },
-      params: {
-        code: httpStatus,
-      },
-    });
-    return response.data;
-  });
+  const { isLoading, data, error, mutate } = useSWR<Cat, AxiosError>(
+    "/cats",
+    async (url) => {
+      const response = await api.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: {
+          code: httpStatus,
+        },
+      });
+      return response.data;
+    }
+  );
 
   useEffect(() => {
     mutate();
@@ -59,10 +57,7 @@ const Cats = () => {
         </p>
 
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="httpStatus"
-            className="text-gray-400"
-          >
+          <label htmlFor="httpStatus" className="text-gray-400">
             Código HTTP :
           </label>
           <input
@@ -76,12 +71,9 @@ const Cats = () => {
               setHttpStatus(Number(e.target.value))
             }
           />
-          {!isLoading &&
-            error?.response?.status === 404 && (
-              <p className="text-red-500">
-                {"Gatinho não encontado! :("}{" "}
-              </p>
-            )}
+          {!isLoading && error?.response?.status === 404 && (
+            <p className="text-red-500">{"Gatinho não encontado! :("} </p>
+          )}
         </div>
       </div>
 

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { loginActionAtom } from "../../lib/atoms";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
+import { Lock, User } from "phosphor-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { TypeOf } from "zod/lib";
+import { loginActionAtom } from "../../lib/atoms";
 import { api } from "../../lib/axios";
 import LoadingElement from "../LoadingElement";
-import { User, Lock } from "phosphor-react";
 
 /* TODO: Better error messages */
 
