@@ -1,17 +1,10 @@
 import { AxiosError } from "axios";
-import {
-  CaretLeft,
-  CaretRight,
-  MagnifyingGlass,
-  Pen,
-  Plus,
-  Trash,
-  UsersThree,
-} from "phosphor-react";
+import { MagnifyingGlass, Pen, Plus, Trash, UsersThree } from "phosphor-react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
 import ClientModal from "../components/modals/ClientModal";
+import Pagination from "../components/Pagination";
 import { api } from "../lib/axios";
 
 const Clients = () => {
@@ -136,22 +129,7 @@ const Clients = () => {
       </section>
 
       {/* Pagination */}
-      <div className="flex items-center gap-4">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((prevPage) => prevPage - 1)}
-          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-        >
-          <CaretLeft weight="fill" />
-        </button>
-        {page}
-        <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
-          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-        >
-          <CaretRight weight="fill" />
-        </button>
-      </div>
+      <Pagination page={page} setPage={setPage} />
 
       {/* Modal */}
       <ClientModal

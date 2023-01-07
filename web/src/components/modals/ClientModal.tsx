@@ -33,9 +33,16 @@ const ClientModal = (props: IClientModal) => {
         console.log(err);
       });
   };
+
+  // Detectar clique fora do modal
+
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-      <Dialog.Panel className="fixed inset-0 flex items-center justify-center rounded-md bg-gray-800 bg-opacity-50">
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      className="fixed inset-0 flex items-center justify-center rounded-md bg-slate-900 bg-opacity-70"
+    >
+      <Dialog.Panel>
         {action === "delete" && client && (
           <div className="flex flex-col justify-center rounded-md bg-gray-800 p-8">
             <h1 className="text-center text-xl font-bold">

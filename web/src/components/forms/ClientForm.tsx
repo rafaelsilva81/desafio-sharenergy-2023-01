@@ -13,7 +13,7 @@ const ClientForm = (props: IClientForm) => {
     <form className="flex flex-col items-center gap-10 rounded-md bg-gray-800 p-8 lg:flex-row">
       <div className="flex flex-col items-center justify-center">
         <User size={80} />
-        <h1 className="text-center text-2xl font-bold">
+        <h1 className="text-center text-2xl font-bold text-primary">
           {action === "create" ? "Cadastrar" : "Editar"} cliente
         </h1>
       </div>

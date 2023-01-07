@@ -1,8 +1,9 @@
 import { AxiosError } from "axios";
-import { CaretLeft, CaretRight, User } from "phosphor-react";
+import { User } from "phosphor-react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import LoadingElement from "../components/LoadingElement";
+import Pagination from "../components/Pagination";
 import { api } from "../lib/axios";
 
 /* TODO: Filter */
@@ -101,22 +102,7 @@ const Users = () => {
       </section>
 
       {/* Pagination */}
-      <div className="flex items-center gap-4">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((prevPage) => prevPage - 1)}
-          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-        >
-          <CaretLeft weight="fill" />
-        </button>
-        {data?.info.page}
-        <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
-          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-        >
-          <CaretRight weight="fill" />
-        </button>
-      </div>
+      <Pagination page={page} setPage={setPage} />
     </main>
   );
 };
