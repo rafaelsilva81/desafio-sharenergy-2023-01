@@ -1,8 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
-import axios from "axios";
 import onRequestValidation from "../utils/onRequestValidation";
-import fs from "fs";
+import api from "../lib/axios";
 
 const catRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
@@ -14,7 +13,7 @@ const catRouter = async (fastify: FastifyInstance) => {
 
     const { code } = catParams.parse(request.query);
 
-    await axios
+    await api
       .get(`https://http.cat/${code}`, {
         responseType: "arraybuffer",
       })

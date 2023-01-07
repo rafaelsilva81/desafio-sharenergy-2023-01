@@ -24,6 +24,6 @@ model Client {
   phone   String
   address String
   cpf     String @unique
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [username])
   userId  String
 }
