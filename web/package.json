@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.7",
     "@hookform/resolvers": "^2.9.10",
     "axios": "^1.2.2",
+    "dayjs": "^1.11.7",
     "framer-motion": "^8.1.5",
     "jotai": "^1.12.1",
     "phosphor-react": "^1.4.1",

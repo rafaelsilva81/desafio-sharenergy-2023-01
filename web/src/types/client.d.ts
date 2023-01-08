@@ -5,4 +5,6 @@ type Client = {
   phone: string;
   address: string;
   cpf: string;
+  createdAt: string;
+  updatedAt: string;
 };

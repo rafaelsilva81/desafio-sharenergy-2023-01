@@ -1,4 +1,5 @@
 import { Dialog } from "@headlessui/react";
+import dayjs from "dayjs";
 import { User, X } from "phosphor-react";
 import { api } from "../../lib/axios";
 import ClientForm from "../forms/ClientForm";
@@ -10,10 +11,11 @@ interface IClientModal {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   action: "create" | "edit" | "view" | "delete";
+  update: () => void;
 }
 
 const ClientModal = (props: IClientModal) => {
-  const { client, isOpen, setIsOpen, action } = props;
+  const { client, isOpen, setIsOpen, action, update } = props;
 
   const deleteClient = (client: Client) => async () => {
     await api
@@ -27,6 +29,7 @@ const ClientModal = (props: IClientModal) => {
       })
       .then(() => {
         setIsOpen(false);
+        update();
       })
       .catch((err) => {
         alert("Erro ao excluir cliente. Por favor tente novamente.");
@@ -70,10 +73,18 @@ const ClientModal = (props: IClientModal) => {
           </div>
         )}
 
-        {action === "create" ||
-          (action === "edit" && (
-            <ClientForm client={client} action={action} setIsOpen={setIsOpen} />
-          ))}
+        {action === "create" && (
+          <ClientForm setIsOpen={setIsOpen} action={action} update={update} />
+        )}
+
+        {action === "edit" && client && (
+          <ClientForm
+            setIsOpen={setIsOpen}
+            action={action}
+            client={client}
+            update={update}
+          />
+        )}
 
         {action === "view" && client && (
           <div className="flex flex-col">
@@ -103,7 +114,11 @@ const ClientModal = (props: IClientModal) => {
                 <span className="text-gray-400">
                   Endereço: {client?.address}
                 </span>
-                <span className="text-gray-400">Cidade: {client?.cpf}</span>
+                <span className="text-gray-400">CPF: {client?.cpf}</span>
+                <hr />
+                <span className="text-gray-400">
+                  Cliente desde {dayjs(client?.createdAt).format("DD/MM/YYYY")}
+                </span>
               </div>
             </div>
           </div>

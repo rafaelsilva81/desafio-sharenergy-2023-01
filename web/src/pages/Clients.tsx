@@ -137,6 +137,7 @@ const Clients = () => {
         setIsOpen={setOpenModal}
         client={client}
         action={action}
+        update={mutate}
       />
     </main>
   );
