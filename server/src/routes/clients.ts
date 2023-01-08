@@ -36,6 +36,9 @@ const clientRouter = async (fastify: FastifyInstance) => {
       where: {
         userId: params.userId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       take: 12,
       skip: page * 12 - 12, // Pagina 1 = 0, Pagina 2 = 12, Pagina 3 = 24
     });

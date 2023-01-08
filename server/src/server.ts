@@ -9,6 +9,8 @@ import catRouter from "./routes/cats";
 import randomUserRouter from "./routes/randomUsers";
 import dogRouter from "./routes/dogs";
 import clientRouter from "./routes/clients";
+import { FastifyRequest } from "fastify";
+import { FastifyReply } from "fastify";
 
 dotenv.config();
 const port = process.env.PORT || "3333";
