@@ -1,5 +1,5 @@
-import axios from "axios";
+import Axios from "axios";
 
-const api = axios.create();
+const api = Axios.create();
 
 export default api;
