@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { Cat } from "phosphor-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
+import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
