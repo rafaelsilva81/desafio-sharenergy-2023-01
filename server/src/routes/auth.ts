@@ -13,6 +13,18 @@ const authRouter = async (fastify: FastifyInstance) => {
   fastify.post("/register", async (request, reply) => {
     const { username, password } = userBody.parse(request.body);
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userExists = await db.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    if (userExists) {
+      return reply.status(500).send({
+        message: "Nome de usuário já registrado",
+      });
+    }
     await db.user
       .create({
         data: {
@@ -28,7 +40,6 @@ const authRouter = async (fastify: FastifyInstance) => {
       .catch((err: unknown) => {
         return reply.status(500).send({
           message: "Houve um erro ao criar o usuário",
-          error: err,
         });
       });
   });
