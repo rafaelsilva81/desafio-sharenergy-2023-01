@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pen, Plus, User, X } from "phosphor-react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { TypeOf, z } from "zod";
 import { api } from "../../lib/axios";
 
@@ -67,15 +68,21 @@ const ClientForm = (props: IClientForm) => {
       )
       .then((res) => {
         if (res.status === 201) {
-          alert("Cliente criado com sucesso!");
+          toast("Cliente criado com sucesso", {
+            type: "success",
+          });
           setIsOpen(false);
           update();
         } else {
-          alert("Erro ao criar cliente");
+          toast("Erro ao criar cliente", {
+            type: "error",
+          });
         }
       })
       .catch((err) => {
-        alert("Erro ao criar cliente");
+        toast("Erro ao criar cliente", {
+          type: "error",
+        });
       });
   };
 
@@ -99,18 +106,26 @@ const ClientForm = (props: IClientForm) => {
         )
         .then((res) => {
           if (res.status === 200) {
-            alert("Cliente editado com sucesso!");
+            toast("Cliente editado com sucesso", {
+              type: "success",
+            });
             setIsOpen(false);
             update();
           } else {
-            alert("Erro ao editar cliente");
+            toast("Erro ao editar cliente", {
+              type: "error",
+            });
           }
         })
         .catch((err) => {
-          alert("Erro ao editar cliente");
+          toast("Erro ao editar cliente", {
+            type: "error",
+          });
         });
     } else {
-      alert("Erro ao editar cliente");
+      toast("Erro ao editar cliente", {
+        type: "error",
+      });
     }
   };
 

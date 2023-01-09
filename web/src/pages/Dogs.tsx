@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { Dog } from "phosphor-react";
 import useSWRImmutable from "swr/immutable";
+import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
@@ -23,9 +24,7 @@ const Dogs = () => {
       window.location.href = "/login";
     } else {
       return (
-        <h1 className="p-2">
-          Erro ao carregar o cachorro. Por favor atualize a página
-        </h1>
+        <ErrorElement message="Houve um erro ao obter os dados, por favor tente novamente em alguns instantes" />
       );
     }
   }

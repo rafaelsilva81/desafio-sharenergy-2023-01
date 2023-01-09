@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import dayjs from "dayjs";
 import { User, X } from "phosphor-react";
+import { toast } from "react-toastify";
 import { api } from "../../lib/axios";
 import ClientForm from "../forms/ClientForm";
 
@@ -28,11 +29,16 @@ const ClientModal = (props: IClientModal) => {
         },
       })
       .then(() => {
+        toast("Cliente excluido com sucesso", {
+          type: "success",
+        });
         setIsOpen(false);
         update();
       })
       .catch((err) => {
-        alert("Erro ao excluir cliente. Por favor tente novamente.");
+        toast("Erro ao excluir cliente", {
+          type: "error",
+        });
         console.log(err);
       });
   };
