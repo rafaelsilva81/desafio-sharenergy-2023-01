@@ -109,7 +109,7 @@ const LoginForm = () => {
 
       <button
         type="submit"
-        className="rounded-lg bg-white p-2 font-bold text-secondary transition duration-300 ease-in-out hover:bg-secondary hover:text-white"
+        className="hover:text-gray-8 rounded-lg bg-white p-2 font-bold text-secondary transition duration-300 ease-in-out hover:bg-primary"
       >
         Login
       </button>

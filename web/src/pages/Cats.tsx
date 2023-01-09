@@ -1,27 +1,27 @@
 import { AxiosError } from "axios";
 import { Cat } from "phosphor-react";
 import { ChangeEvent, useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
 const Cats = () => {
   const [httpStatus, setHttpStatus] = useState(404);
 
-  const { isLoading, data, error, mutate } = useSWR<Cat, AxiosError>(
-    "/cats",
-    async (url) => {
-      const response = await api.get(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          code: httpStatus,
-        },
-      });
-      return response.data;
-    }
-  );
+  const { isLoading, data, error, mutate, isValidating } = useSWRImmutable<
+    Cat,
+    AxiosError
+  >("/cats", async (url) => {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      params: {
+        code: httpStatus,
+      },
+    });
+    return response.data;
+  });
 
   useEffect(() => {
     mutate();
@@ -31,12 +31,16 @@ const Cats = () => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       window.location.href = "/login";
+    } else {
+      return (
+        <ErrorElement message="Houve um erro ao obter os dados, por favor tente novamente em alguns instantes" />
+      );
     }
   }
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:flex-row">
-      {isLoading && <LoadingElement />}
+      {(isLoading || isValidating) && <LoadingElement />}
       {/* Input */}
       <div className="flex flex-col gap-4 md:w-1/2">
         <h1 className="font-bol flex cursor-pointer items-center gap-1 text-4xl">
@@ -71,7 +75,7 @@ const Cats = () => {
               setHttpStatus(Number(e.target.value))
             }
           />
-          {!isLoading && error?.response?.status === 404 && (
+          {!isLoading && !isValidating && error?.response?.status === 404 && (
             <p className="text-red-500">{"Gatinho não encontado! :("} </p>
           )}
         </div>

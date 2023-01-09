@@ -5,17 +5,17 @@ import LoadingElement from "../components/LoadingElement";
 import { api } from "../lib/axios";
 
 const Dogs = () => {
-  const { data, error, isLoading, mutate } = useSWRImmutable<Dog, AxiosError>(
-    "/dogs",
-    async (url) => {
-      const response = await api.get(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      return response.data;
-    }
-  );
+  const { data, error, isLoading, mutate, isValidating } = useSWRImmutable<
+    Dog,
+    AxiosError
+  >("/dogs", async (url) => {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  });
 
   if (error) {
     if (error.response?.status === 401) {
@@ -33,6 +33,7 @@ const Dogs = () => {
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:flex-row">
       {isLoading && <LoadingElement />}
+      {isValidating && <LoadingElement />}
 
       {/* Input */}
       <div className="flex flex-col gap-4 md:w-1/2">

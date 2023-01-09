@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { MagnifyingGlass, Pen, Plus, Trash, UsersThree } from "phosphor-react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
 import ClientModal from "../components/modals/ClientModal";
 import Pagination from "../components/Pagination";
@@ -16,41 +17,40 @@ const Clients = () => {
     "create"
   );
 
-  const { data, error, isLoading, mutate } = useSWR<Client[], AxiosError>(
-    "/clients/",
-    async (url) => {
-      const response = await api.get(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          userId: localStorage.getItem("username"),
-          page: page,
-        },
-      });
-      return response.data;
-    }
-  );
+  const { data, error, isLoading, mutate, isValidating } = useSWR<
+    Client[],
+    AxiosError
+  >("/clients/", async (url) => {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      params: {
+        userId: localStorage.getItem("username"),
+        page: page,
+      },
+    });
+    return response.data;
+  });
 
   useEffect(() => {
     mutate();
   }, [page]);
+
   if (error) {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       window.location.href = "/login";
     } else {
       return (
-        <h1 className="p-2">
-          Erro ao carregar clientes. Por favor atualize a página
-        </h1>
+        <ErrorElement message="Houve um erro ao obter os dados, por favor tente novamente em alguns instantes" />
       );
     }
   }
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
-      {isLoading && <LoadingElement />}
+      {(isLoading || isValidating) && <LoadingElement />}
 
       {/* Header */}
       <section className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-4 md:justify-between">

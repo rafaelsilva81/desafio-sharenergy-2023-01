@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
-import { User } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { MagnifyingGlass, User } from "phosphor-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
+import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
 import Pagination from "../components/Pagination";
 import { api } from "../lib/axios";
@@ -11,24 +12,29 @@ import { api } from "../lib/axios";
 const Users = () => {
   const [page, setPage] = useState(1);
 
+  const filter = useRef<HTMLSelectElement>(null);
+  const search = useRef<HTMLInputElement>(null);
+
+  const { data, error, isLoading, mutate, isValidating } = useSWR<
+    Users,
+    AxiosError
+  >("/random-users/", async (url) => {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      params: {
+        page: page,
+        ...(search && { search: search.current?.value }),
+        ...(filter && { filter: filter.current?.value }),
+      },
+    });
+    return response.data;
+  });
+
   useEffect(() => {
     mutate();
   }, [page]);
-
-  const { data, error, isLoading, mutate } = useSWR<Users, AxiosError>(
-    "/random-users/",
-    async (url) => {
-      const response = await api.get(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          page: page,
-        },
-      });
-      return response.data;
-    }
-  );
 
   if (error) {
     if (error.response?.status === 401) {
@@ -36,16 +42,19 @@ const Users = () => {
       window.location.href = "/login";
     } else {
       return (
-        <h1 className="p-2">
-          Erro ao carregar usuários. Por favor atualize a página
-        </h1>
+        <ErrorElement message="Houve um erro ao obter os dados, por favor tente novamente em alguns instantes" />
       );
     }
   }
 
+  const updateSearch = (e: FormEvent) => {
+    e.preventDefault();
+    mutate();
+  };
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
-      {isLoading && <LoadingElement />}
+      {isLoading || (isValidating && <LoadingElement />)}
 
       {/* Header */}
       <section className="flex items-center justify-center gap-4 rounded-lg bg-gray-800 p-4 md:justify-between">
@@ -56,18 +65,27 @@ const Users = () => {
         <div className="flex flex-col gap-2 md:flex-row">
           <input
             type="text"
-            placeholder="Pesquisar por"
+            ref={search}
+            placeholder="Pesquisa"
             className="rounded-md p-2"
           />
           <select
             name="search"
             id="search"
+            ref={filter}
             className="rounded-md p-2 text-black"
           >
             <option value="name">Nome</option>
             <option value="email">Email</option>
             <option value="phone">Nome de Usuário</option>
           </select>
+          <button
+            className="flex items-center justify-center gap-1 rounded-md bg-primary p-2 text-gray-800"
+            onClick={updateSearch}
+          >
+            <MagnifyingGlass />
+            Pesquisar
+          </button>
         </div>
       </section>
 
@@ -79,7 +97,7 @@ const Users = () => {
             className="flex items-center gap-4 rounded-lg bg-gray-800 p-4"
           >
             <img
-              src={user.picture.large}
+              src={user.picture.medium}
               alt={user.name.first}
               className="rounded-full"
               width={64}
