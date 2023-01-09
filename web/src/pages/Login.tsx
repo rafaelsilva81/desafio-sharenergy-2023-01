@@ -14,7 +14,7 @@ const Login = () => {
     }
   }, [isLogged]);
   return (
-    <div className="justify-ve flex h-screen w-screen flex-col items-center gap-20 bg-main-pattern bg-cover p-20 md:flex-row">
+    <div className="justify-ve flex h-screen w-screen flex-col items-center gap-20 bg-main-pattern bg-cover p-8 md:flex-row md:p-20">
       <section className="flex h-full flex-1 flex-col justify-around gap-8">
         <img src={logo} alt="Sharenergy" width={"200px"} className="" />
 
