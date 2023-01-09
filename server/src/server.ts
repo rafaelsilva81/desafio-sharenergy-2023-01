@@ -43,6 +43,7 @@ const bootstrap = async () => {
   await fastify.register(clientRouter, { prefix: "/clients" });
 
   await fastify.listen({
+    host: "0.0.0.0",
     port: Number(port),
   });
 };
