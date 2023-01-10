@@ -15,14 +15,13 @@ const clientGetSchema = {
         },
         page: { type: "number" },
       },
-      required: ["userId"],
+      required: [],
     },
     response: {
       200: {
         description: "Cliente deletado com sucesso",
         type: "object",
         properties: {
-          message: { type: "string" },
           clients: {
             type: "array",
             items: {

@@ -56,7 +56,6 @@ const clientRouter = async (fastify: FastifyInstance) => {
     }
 
     reply.status(200).send({
-      message: "Clientes listados com sucesso",
       clients,
     });
   });

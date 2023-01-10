@@ -18,7 +18,7 @@ const Clients = () => {
   );
 
   const { data, error, isLoading, mutate, isValidating } = useSWR<
-    Client[],
+    { clients: Client[] },
     AxiosError
   >("/clients/", async (url) => {
     const response = await api.get(url, {
@@ -48,6 +48,8 @@ const Clients = () => {
     }
   }
 
+  console.log(data);
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
       {(isLoading || isValidating) && <LoadingElement />}
@@ -76,7 +78,7 @@ const Clients = () => {
 
       {/* Items */}
       <section className="grid grid-cols-1 gap-2 md:grid-cols-3">
-        {data?.map((client) => (
+        {data?.clients.map((client) => (
           <div
             key={client.id}
             className="flex items-center gap-4 rounded-lg bg-gray-800 p-4"
