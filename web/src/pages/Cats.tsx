@@ -32,7 +32,7 @@ const Cats = () => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       window.location.href = "/login";
-    } else {
+    } else if (error.response?.status != 404) {
       return (
         <ErrorElement message="Houve um erro ao obter os dados, por favor tente novamente em alguns instantes" />
       );
