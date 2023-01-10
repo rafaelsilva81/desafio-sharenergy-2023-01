@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import api from "../lib/axios";
+import { getRandomUsersSchema } from "../schemas/randomUsersSchema";
 import onRequestValidation from "../utils/onRequestValidation";
 
 const baseUrl =
@@ -11,7 +12,7 @@ const baseResults = 18;
 const randomUserRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
-  fastify.get("/", async (request, reply) => {
+  fastify.get("/", getRandomUsersSchema, async (request, reply) => {
     const querySchema = z.object({
       page: z.string().transform((value) => Number(value)),
       filter: z.enum(["name", "email", "username"]).optional(),

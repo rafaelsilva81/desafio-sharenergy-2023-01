@@ -1,6 +1,12 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import db from "../lib/prisma";
+import {
+  clientDeleteSchema,
+  clientGetSchema,
+  clientPostSchema,
+  clientPutSchema,
+} from "../schemas/clientSchema";
 import onRequestValidation from "../utils/onRequestValidation";
 
 const clientCreateBody = z.object({
@@ -19,7 +25,7 @@ const clientRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
   /* GET Cliente */
-  fastify.get("/", async (request, reply) => {
+  fastify.get("/", clientGetSchema, async (request, reply) => {
     const paramsSchema = z.object({
       userId: z.string(),
       page: z
@@ -40,14 +46,23 @@ const clientRouter = async (fastify: FastifyInstance) => {
         createdAt: "desc",
       },
       take: 12,
-      skip: page * 12 - 12, // Pagina 1 = 0, Pagina 2 = 12, Pagina 3 = 24
+      skip: page * 12 - 12,
     });
 
-    reply.status(200).send(clients);
+    if (!clients) {
+      reply.status(500).send({
+        message: "Houve um erro ao obter os clientes",
+      });
+    }
+
+    reply.status(200).send({
+      message: "Clientes listados com sucesso",
+      clients,
+    });
   });
 
   /* POST Cliente */
-  fastify.post("/", async (request, reply) => {
+  fastify.post("/", clientPostSchema, async (request, reply) => {
     const body = clientCreateBody.parse(request.body);
 
     // Checar se o cliente existe (campos obrigatórios)
@@ -91,7 +106,7 @@ const clientRouter = async (fastify: FastifyInstance) => {
   });
 
   /* PUT Cliente */
-  fastify.put("/:id", async (request, reply) => {
+  fastify.put("/:id", clientPutSchema, async (request, reply) => {
     const body = clientUpdateBody.parse(request.body);
 
     const paramsSchema = z.object({
@@ -134,7 +149,7 @@ const clientRouter = async (fastify: FastifyInstance) => {
   });
 
   /* DELETE Cliente */
-  fastify.delete("/:id", async (request, reply) => {
+  fastify.delete("/:id", clientDeleteSchema, async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string(),
     });
@@ -163,7 +178,6 @@ const clientRouter = async (fastify: FastifyInstance) => {
       .then((client) => {
         reply.status(200).send({
           message: "Cliente deletado com sucesso",
-          client,
         });
       })
       .catch((error) => {

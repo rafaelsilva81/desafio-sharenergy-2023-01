@@ -3,6 +3,10 @@ import { z } from "zod";
 import db from "../lib/prisma";
 import bcrypt from "bcrypt";
 
+/* Schemas */
+import { loginUserSchema, registerUserSchema } from "../schemas/authSchema";
+
+/* ZOD Validation */
 const userBody = z.object({
   username: z.string(),
   password: z.string(),
@@ -10,7 +14,7 @@ const userBody = z.object({
 
 const authRouter = async (fastify: FastifyInstance) => {
   /* Registro de usuário */
-  fastify.post("/register", async (request, reply) => {
+  fastify.post("/register", registerUserSchema, async (request, reply) => {
     const { username, password } = userBody.parse(request.body);
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -21,7 +25,7 @@ const authRouter = async (fastify: FastifyInstance) => {
     });
 
     if (userExists) {
-      return reply.status(500).send({
+      return reply.status(409).send({
         message: "Nome de usuário já registrado",
       });
     }
@@ -45,7 +49,7 @@ const authRouter = async (fastify: FastifyInstance) => {
   });
 
   /* Login de usuário */
-  fastify.post("/login", async (request, reply) => {
+  fastify.post("/login", loginUserSchema, async (request, reply) => {
     const { username, password } = userBody.parse(request.body);
 
     const user = await db.user.findUnique({
@@ -70,7 +74,7 @@ const authRouter = async (fastify: FastifyInstance) => {
 
     const token = fastify.jwt.sign({ uid: user.id });
 
-    reply.send({
+    return reply.status(200).send({
       token,
       user: {
         id: user.id,

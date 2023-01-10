@@ -1,11 +1,12 @@
 import { FastifyInstance } from "fastify";
 import onRequestValidation from "../utils/onRequestValidation";
 import api from "../lib/axios";
+import { getDogsSchema } from "../schemas/dogSchema";
 
 const dogRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
-  fastify.get("/", async (request, reply) => {
+  fastify.get("/", getDogsSchema, async (request, reply) => {
     await api
       .get("https://random.dog/woof.json")
       .then((response) => {
