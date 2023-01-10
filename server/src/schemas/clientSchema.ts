@@ -4,7 +4,11 @@ import { serverErrorSchema } from "./errors/serverErrorSchema";
 /* GET */
 const clientGetSchema = {
   schema: {
+<<<<<<< HEAD
     tags: ["CLIENTS"],
+=======
+    tags: ["CLIENTES"],
+>>>>>>> b0b6d342c1afcf7ab411910e9c3416302bc11af3
     description: "Obtem a lista de clientes",
     params: {
       type: "object",
@@ -62,7 +66,11 @@ const clientGetSchema = {
 /* POST */
 const clientPostSchema = {
   schema: {
+<<<<<<< HEAD
     tags: ["CLIENTS"],
+=======
+    tags: ["CLIENTES"],
+>>>>>>> b0b6d342c1afcf7ab411910e9c3416302bc11af3
     description: "Cria um novo cliente",
     body: {
       client: {
@@ -127,7 +135,11 @@ const clientPostSchema = {
 /* PUT */
 const clientPutSchema = {
   schema: {
+<<<<<<< HEAD
     tags: ["CLIENTS"],
+=======
+    tags: ["CLIENTES"],
+>>>>>>> b0b6d342c1afcf7ab411910e9c3416302bc11af3
     description: "Atualiza um cliente",
     params: {
       id: { type: "string", description: "id de um cliente" },
@@ -194,7 +206,11 @@ const clientPutSchema = {
 /* DELETE */
 const clientDeleteSchema = {
   schema: {
+<<<<<<< HEAD
     tags: ["CLIENTS"],
+=======
+    tags: ["CLIENTES"],
+>>>>>>> b0b6d342c1afcf7ab411910e9c3416302bc11af3
     description: "Deleta um cliente",
     params: {
       id: { type: "string", description: "id de um cliente" },
