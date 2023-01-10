@@ -9,7 +9,6 @@ const getRandomUsersSchema = {
     params: {
       type: "object",
       properties: {
-<<<<<<< HEAD
         page: { type: "number" },
         filter: {
           type: "string",
@@ -18,16 +17,6 @@ const getRandomUsersSchema = {
         search: { type: "string" },
       },
       required: [],
-=======
-        page: { type: "number", required: false },
-        filter: {
-          type: "string",
-          enum: ["email", "name", "username"],
-          required: false,
-        },
-        search: { type: "string", required: false },
-      },
->>>>>>> b0b6d342c1afcf7ab411910e9c3416302bc11af3
     },
     response: {
       200: {
