@@ -23,7 +23,7 @@ const getRandomUsersSchema = {
         description: "Retorna uma lista de usuários aleatórios",
         type: "object",
         properties: {
-          results: {
+          "": {
             type: "object",
             properties: {
               results: {
