@@ -48,8 +48,6 @@ const Clients = () => {
     }
   }
 
-  console.log(data);
-
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
       {(isLoading || isValidating) && <LoadingElement />}
