@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
-import { Lock, User } from "phosphor-react";
-import { useState } from "react";
+import { Eye, EyeClosed, Lock, User } from "phosphor-react";
+import { FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -41,6 +41,9 @@ const RegisterForm = () => {
   const [_, setLoginAction] = useAtom(loginActionAtom);
   const [loading, setLoading] = useState(false);
 
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -72,6 +75,16 @@ const RegisterForm = () => {
       });
   };
 
+  const togglePassword = (e: FormEvent) => {
+    e.preventDefault();
+    setShowPass(!showPass);
+  };
+
+  const togglePasswordConfirm = (e: FormEvent) => {
+    e.preventDefault();
+    setShowConfirmPass(!showConfirmPass);
+  };
+
   return (
     <form
       className="flex flex-col justify-center gap-4"
@@ -94,7 +107,7 @@ const RegisterForm = () => {
           type="text"
           required
           placeholder="Nome de usuário"
-          className="h-12 rounded-md p-2"
+          className="h-12 rounded-md p-4"
         />
         {errors.username && (
           <span className="text-sm text-red-500">
@@ -111,13 +124,21 @@ const RegisterForm = () => {
           <Lock /> Senha
         </label>
 
-        <input
-          {...register("password", { required: true })}
-          type="password"
-          required
-          placeholder="Senha"
-          className="h-12 rounded-md p-2"
-        />
+        <div className="p- flex h-12 items-center rounded-md bg-white p-2">
+          <input
+            type={showPass ? "text" : "password"}
+            placeholder="Senha"
+            className="flex-1 p-2"
+            {...register("password")}
+          />
+          <button onClick={togglePassword}>
+            {showPass ? (
+              <EyeClosed className="text-black" size={20} />
+            ) : (
+              <Eye className="text-black" size={20} />
+            )}
+          </button>
+        </div>
         {errors.password && (
           <span className="text-sm text-red-500">
             {errors.password.message}
@@ -132,13 +153,22 @@ const RegisterForm = () => {
         >
           <Lock /> Confirmar senha
         </label>
-        <input
-          {...register("passwordConfirmation", { required: true })}
-          type="password"
-          required
-          placeholder="Confirme sua senha"
-          className="h-12 rounded-md p-2"
-        />
+        <div className="p- flex h-12 items-center rounded-md bg-white p-2">
+          <input
+            {...register("passwordConfirmation", { required: true })}
+            type={showConfirmPass ? "text" : "password"}
+            required
+            placeholder="Confirme sua senha"
+            className="h-12 rounded-md p-4"
+          />
+          <button onClick={togglePasswordConfirm}>
+            {showConfirmPass ? (
+              <EyeClosed className="text-black" size={20} />
+            ) : (
+              <Eye className="text-black" size={20} />
+            )}
+          </button>
+        </div>
         {errors.passwordConfirmation && (
           <span className="text-sm text-red-500">
             {errors.passwordConfirmation.message}

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
-import { Lock, User } from "phosphor-react";
-import { useState } from "react";
+import { Eye, EyeClosed, Lock, User } from "phosphor-react";
+import { FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -9,9 +9,6 @@ import { TypeOf } from "zod/lib";
 import { loginActionAtom } from "../../lib/atoms";
 import { api } from "../../lib/axios";
 import LoadingElement from "../LoadingElement";
-
-/* TODO: Better error messages */
-
 const formSchema = z.object({
   username: z.string({
     required_error: "Esse campo é obrigatório",
@@ -27,7 +24,7 @@ type formType = TypeOf<typeof formSchema>;
 const LoginForm = () => {
   const [_, setLoginAction] = useAtom(loginActionAtom);
   const [loading, setLoading] = useState(false);
-
+  const [showPass, setShowPass] = useState(false);
   const {
     register,
     handleSubmit,
@@ -68,6 +65,11 @@ const LoginForm = () => {
     console.log(res);
   };
 
+  const togglePassword = (e: FormEvent) => {
+    e.preventDefault();
+    setShowPass(!showPass);
+  };
+
   return (
     <form
       className="flex flex-col justify-center gap-4"
@@ -89,7 +91,7 @@ const LoginForm = () => {
           id="username"
           type="text"
           placeholder="Nome de usuário"
-          className="h-12 rounded-md p-2"
+          className="h-12 rounded-md p-4"
           {...register("username")}
         />
       </div>
@@ -101,12 +103,21 @@ const LoginForm = () => {
         >
           <Lock /> Senha
         </label>
-        <input
-          type="password"
-          placeholder="Senha"
-          className="h-12 rounded-md p-2"
-          {...register("password")}
-        />
+        <div className="p- flex h-12 items-center rounded-md bg-white p-2">
+          <input
+            type={showPass ? "text" : "password"}
+            placeholder="Senha"
+            className="flex-1 p-2"
+            {...register("password")}
+          />
+          <button onClick={togglePassword}>
+            {showPass ? (
+              <EyeClosed className="text-black" size={20} />
+            ) : (
+              <Eye className="text-black" size={20} />
+            )}
+          </button>
+        </div>
       </div>
 
       <button
