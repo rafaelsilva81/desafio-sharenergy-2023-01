@@ -1,4 +1,4 @@
-import { CaretLeft, CaretRight } from "phosphor-react";
+import { CaretDoubleLeft, CaretLeft, CaretRight } from "phosphor-react";
 
 const Pagination = ({
   page,
@@ -9,13 +9,22 @@ const Pagination = ({
 }) => {
   return (
     <div className="flex items-center gap-4">
-      <button
-        disabled={page === 1}
-        onClick={() => setPage((prevPage) => prevPage - 1)}
-        className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
-      >
-        <CaretLeft weight="fill" />
-      </button>
+      <div className="flex items-center">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretDoubleLeft weight="bold" />
+        </button>
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((prevPage) => prevPage - 1)}
+          className="hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+        >
+          <CaretLeft weight="fill" />
+        </button>
+      </div>
       {page}
       <button
         onClick={() => setPage((prevPage) => prevPage + 1)}
