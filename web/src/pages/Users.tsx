@@ -1,21 +1,21 @@
 import { AxiosError } from "axios";
 import { MagnifyingGlass, User } from "phosphor-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
 import Pagination from "../components/Pagination";
 import { api } from "../lib/axios";
 
 /* TODO: Filter */
-/* TODO: Filter */
+
 const Users = () => {
   const [page, setPage] = useState(1);
 
   const filter = useRef<HTMLSelectElement>(null);
   const search = useRef<HTMLInputElement>(null);
 
-  const { data, error, isLoading, mutate, isValidating } = useSWR<
+  const { data, error, isLoading, mutate, isValidating } = useSWRImmutable<
     Users,
     AxiosError
   >("/random-users/", async (url) => {
@@ -52,6 +52,7 @@ const Users = () => {
     mutate();
   };
 
+  console.log(data);
   return (
     <main className="flex flex-1 flex-col gap-4 p-8">
       {isLoading || (isValidating && <LoadingElement />)}

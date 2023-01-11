@@ -14,23 +14,47 @@ const randomUserRouter = async (fastify: FastifyInstance) => {
   fastify.get("/", getRandomUsersSchema, async (request, reply) => {
     const querySchema = z.object({
       page: z.string().transform((value) => Number(value)),
+      filter: z.enum(["name", "email", "username"]).optional(),
+      search: z.string().optional(),
     });
 
-    const { page } = querySchema.parse(request.query) || 1;
+    const { page, filter, search } = querySchema.parse(request.query);
 
-    try {
-      const { data }: { data: Users } = await api.get(
-        // Obter mais resultados caso haja filtro
-        `${baseUrl}&results=${baseResults}&page=${page}`
-      );
+    const { data }: { data: Users } = await api.get(
+      // Obter mais resultados caso haja filtro
+      `${baseUrl}&results=${baseResults}&page=${page}`
+    );
 
-      return reply.send(data);
-    } catch (error) {
-      return reply.status(500).send({
-        message: "Erro interno do servidor",
-      });
-    }
+    fastify.cache.set("random-users", data, 60 * 60 * 24, (err) => {
+      if (err) return reply.send(err);
+
+      if (filter && search) {
+        console.log("FILTRANDO");
+        switch (filter) {
+          case "name":
+            data.results = data.results.filter((user) =>
+              user.name.first.includes(search)
+            );
+            break;
+          case "email":
+            data.results = data.results.filter((user) =>
+              user.email.includes(search)
+            );
+            break;
+          case "username":
+            data.results = data.results.filter((user) =>
+              user.login.username.includes(search)
+            );
+            break;
+        }
+      }
+
+      reply.send(data);
+      console.log("Cache setted! (random-users)");
+    });
   });
+
+  /* TODO: Filter */
 };
 
 export default randomUserRouter;

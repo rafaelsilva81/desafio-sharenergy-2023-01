@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import fastifyJwt from "@fastify/jwt";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUI from "@fastify/swagger-ui";
+import fastifyCaching from "@fastify/caching";
 
 /* Routes */
 import authRouter from "./routes/auth";
@@ -19,6 +20,11 @@ const bootstrap = async () => {
   const fastify = Fastify({ logger: true });
 
   await fastify.register(cors, { origin: true });
+
+  fastify.register(fastifyCaching, {
+    privacy: fastifyCaching.privacy.NOCACHE,
+    expiresIn: 60 * 60 * 24,
+  });
 
   await fastify.register(fastifyJwt, {
     secret: process.env.JWT_SECRET || "secret",
