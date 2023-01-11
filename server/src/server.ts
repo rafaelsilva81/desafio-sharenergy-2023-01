@@ -20,7 +20,6 @@ const bootstrap = async () => {
 
   await fastify.register(cors, { origin: true });
 
-  /* TODO: Add secret to env */
   await fastify.register(fastifyJwt, {
     secret: process.env.JWT_SECRET || "secret",
     cookie: {

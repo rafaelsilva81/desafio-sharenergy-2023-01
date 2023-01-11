@@ -11,49 +11,26 @@ const baseResults = 18;
 const randomUserRouter = async (fastify: FastifyInstance) => {
   onRequestValidation(fastify);
 
-  fastify.get("/", async (request, reply) => {
+  fastify.get("/", getRandomUsersSchema, async (request, reply) => {
     const querySchema = z.object({
       page: z.string().transform((value) => Number(value)),
-      filter: z.enum(["name", "email", "username"]).optional(),
-      search: z.string().optional(),
-      // Enum não é a melhor opção, mas é o que é suportado pelo zod
     });
 
-    const { page, filter, search } = querySchema.parse(request.query) || 1;
+    const { page } = querySchema.parse(request.query) || 1;
 
     try {
       const { data }: { data: Users } = await api.get(
         // Obter mais resultados caso haja filtro
-        `${baseUrl}&results=${filter ? 100 : baseResults}&page=${page}`
+        `${baseUrl}&results=${baseResults}&page=${page}`
       );
 
-      if (filter && search) {
-        switch (filter) {
-          case "name":
-            data.results = data.results.filter((user) =>
-              user.name.first.includes(search)
-            );
-            break;
-          case "email":
-            data.results = data.results.filter((user) =>
-              user.email.includes(search)
-            );
-            break;
-          case "username":
-            data.results = data.results.filter((user) =>
-              user.login.username.includes(search)
-            );
-            break;
-        }
-
-        data.results = data.results.slice(page - 1, baseResults);
-      }
-
       return reply.send(data);
-    } catch (error) {}
+    } catch (error) {
+      return reply.status(500).send({
+        message: "Erro interno do servidor",
+      });
+    }
   });
-
-  /* TODO: Filter */
 };
 
 export default randomUserRouter;
