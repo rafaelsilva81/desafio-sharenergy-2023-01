@@ -42,6 +42,7 @@ const authRouter = async (fastify: FastifyInstance) => {
         });
       })
       .catch((err: unknown) => {
+        console.log(err);
         return reply.status(500).send({
           message: "Houve um erro ao criar o usuário",
         });
