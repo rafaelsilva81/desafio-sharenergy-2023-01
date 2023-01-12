@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "rimraf ./build && tsc",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "build-containers": "docker-compose up -d",
+    "create-default-user": "curl -X POST -H \"Content-Type: application/json\" -d '{\"username\":\"desafiosharenergy\",\"password\":\"sh@r3n3rgy\"}' http://localhost:3333/auth/register",
+    "setup": "npm-run-all build-containers build start"
   },
   "prisma": {
     "seed": "tsx prisma/seed_clients.ts"
@@ -35,6 +38,7 @@
     "dotenv": "^16.0.3",
     "fastify": "^4.11.0",
     "fastify-plugin": "^4.4.0",
+    "npm-run-all": "^4.1.5",
     "zod": "^3.20.2"
   }
 }
