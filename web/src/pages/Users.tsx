@@ -7,7 +7,7 @@ import LoadingElement from "../components/LoadingElement";
 import Pagination from "../components/Pagination";
 import { api } from "../lib/axios";
 
-/* TODO: Filter */
+
 
 const Users = () => {
   const [page, setPage] = useState(1);

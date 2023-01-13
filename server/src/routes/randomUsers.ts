@@ -53,8 +53,6 @@ const randomUserRouter = async (fastify: FastifyInstance) => {
       console.log("Cache setted! (random-users)");
     });
   });
-
-  /* TODO: Filter */
 };
 
 export default randomUserRouter;

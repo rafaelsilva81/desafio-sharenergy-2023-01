@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import { TypeOf, z } from "zod";
 import { api } from "../../lib/axios";
 
-/* TODO melhorar mensagens de erro e alertas (REACT-TOASTIFY) */
-
 interface IClientForm {
   client?: Client;
   action: "create" | "edit";

@@ -10,8 +10,6 @@ import { loginActionAtom } from "../../lib/atoms";
 import { api } from "../../lib/axios";
 import LoadingElement from "../LoadingElement";
 
-/* TODO: Better error messages */
-
 const formSchema = z
   .object({
     username: z
