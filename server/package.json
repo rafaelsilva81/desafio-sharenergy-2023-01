@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "rimraf ./build && tsc",
+    "seed": "npx prisma db seed",
     "start": "node build/server.js",
     "build-containers": "docker-compose up -d",
+    "generate": "npx prisma generate",
     "create-default-user": "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"username\\\":\\\"desafiosharenergy\\\", \\\"password\\\":\\\"sh@r3n3rgy\\\"}\" http://localhost:3333/auth/register",
-    "setup": "npm-run-all build-containers build start"
+    "setup": "npm-run-all build-containers generate build start"
   },
   "prisma": {
     "seed": "tsx prisma/seed_clients.ts"

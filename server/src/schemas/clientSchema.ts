@@ -27,7 +27,7 @@ const clientGetSchema = {
             items: {
               type: "object",
               properties: {
-                _id: { type: "string" },
+                id: { type: "string" },
                 name: { type: "string" },
                 email: { type: "string" },
                 phone: { type: "string" },
