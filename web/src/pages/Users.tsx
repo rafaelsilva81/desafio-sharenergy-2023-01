@@ -78,10 +78,11 @@ const Users = () => {
           >
             <option value="name">Nome</option>
             <option value="email">Email</option>
-            <option value="phone">Nome de Usuário</option>
+            <option value="username">Nome de Usuário</option>
           </select>
           <button
-            className="flex items-center justify-center gap-1 rounded-md bg-primary p-2 text-gray-800"
+            className="flex items-center justify-center gap-1 rounded-md bg-primary p-2 text-gray-800 
+            hover:bg-opacity-80"
             onClick={updateSearch}
           >
             <MagnifyingGlass />

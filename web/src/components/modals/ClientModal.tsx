@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import { api } from "../../lib/axios";
 import ClientForm from "../forms/ClientForm";
 
-/* TODO: Melhor popups de alerta (react-toastify) */
-
 interface IClientModal {
   client?: Client;
   isOpen: boolean;

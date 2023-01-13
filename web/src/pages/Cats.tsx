@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
-import { Cat } from "phosphor-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { Cat, MagnifyingGlass } from "phosphor-react";
+import { ChangeEvent, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import ErrorElement from "../components/errors/ErrorElement";
 import LoadingElement from "../components/LoadingElement";
@@ -23,10 +23,6 @@ const Cats = () => {
     });
     return response.data;
   });
-
-  useEffect(() => {
-    mutate();
-  }, [httpStatus]);
 
   if (error) {
     if (error.response?.status === 401) {
@@ -80,6 +76,13 @@ const Cats = () => {
             <p className="text-red-500">{"Gatinho não encontado! :("} </p>
           )}
         </div>
+
+        <button
+          className="flex h-12 items-center justify-center gap-1 rounded-md bg-neutral-300 text-gray-800 transition ease-in-out hover:bg-primary"
+          onClick={() => mutate()}
+        >
+          <MagnifyingGlass /> Buscar
+        </button>
       </div>
 
       {/* Image */}

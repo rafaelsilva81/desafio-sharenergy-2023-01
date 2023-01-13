@@ -87,6 +87,7 @@ const ClientForm = (props: IClientForm) => {
   };
 
   const editClient = async (data: formType) => {
+    console.log(client);
     if (client) {
       await api
         .put(
@@ -94,9 +95,6 @@ const ClientForm = (props: IClientForm) => {
           {
             ...data,
             userId: localStorage.getItem("username"),
-            params: {
-              id: client.id,
-            },
           },
           {
             headers: {
